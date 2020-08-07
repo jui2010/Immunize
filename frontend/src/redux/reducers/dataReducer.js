@@ -1,26 +1,27 @@
 import {SET_USERS, SET_REQUESTS, SET_VACCINE_CENTER ,GET_VACCINE_CENTERS,BOOK_APPOINTMENT,
-    EDIT_APPOINTMENT,DELETE_APPOINTMENT, GET_DAILY_STOCK, LOADING_DATA} from '../types'
+    EDIT_APPOINTMENT,DELETE_APPOINTMENT, GET_DAILY_STOCK, SELECTED_CENTER} from '../types'
 
 const initialState = {
    users : [],
    appointmentRequests : [],
    vaccineCenters : [],
    dailyStockAndRequests : [],
-   loading: false
+   selectedCenter: ''
 }
 
 export default function (state = initialState, action){
    switch(action.type){
-        case LOADING_DATA : 
-        return {
-            ...state,
-            loading : true,
-        }
-
+ 
         case SET_USERS : 
         return {
             ...state,
             users : action.payload,
+        }
+
+        case SELECTED_CENTER : 
+        return {
+            ...state,
+            selectedCenter : action.payload,
         }
 
         case SET_REQUESTS : 

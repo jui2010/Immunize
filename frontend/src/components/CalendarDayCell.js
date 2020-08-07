@@ -5,23 +5,7 @@ import format from "date-fns/format"
 
 import withStyles from '@material-ui/core/styles/withStyles'
 
-import parseISO from 'date-fns/parseISO'
-import getDate from 'date-fns/getDate'
-import getMonth from 'date-fns/getMonth'
-import getSeconds from 'date-fns/getSeconds'
-
 import {connect} from 'react-redux'
-
-import Dialog from '@material-ui/core/Dialog'
-import DialogActions from '@material-ui/core/DialogActions'
-import DialogContent from '@material-ui/core/DialogContent'
-import DialogContentText from '@material-ui/core/DialogContentText'
-import DialogTitle from '@material-ui/core/DialogTitle'
-
-import PermContactCalendarIcon from '@material-ui/icons/PermContactCalendar'
-import WorkIcon from '@material-ui/icons/Work'
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
-import GeneralIcon from '@material-ui/icons/Assignment'
 
 const styles = (theme) => ({
   ...theme.spread,
@@ -53,11 +37,6 @@ const styles = (theme) => ({
     display: 'flex',
     flexDirection : 'row'
   },
-  postTodo : {
-    margin : '0px 0px auto 85px'   ,
-    position:'absolute',
-    float :'right'
-  },
   label : {
     display: 'flex',
     flexDirection : 'row',
@@ -76,7 +55,7 @@ const styles = (theme) => ({
 
 export class CalendarDayCell extends Component {
     state = {
-
+        isHovering : false
     }
 
     handleMouseHover = () => {
@@ -91,41 +70,13 @@ export class CalendarDayCell extends Component {
         })
     }
 
-    handleOfficeHovered = () => {
-        this.setState({
-            officeHovered : true
-        })
-    }
-    handlePersonalHovered = () => {
-        this.setState({
-            personalHovered : true
-        })
-    }
-    handleShoppingHovered = () => {
-        this.setState({
-            shoppingHovered : true
-        })
-    }
-    handleGeneralHovered = () => {
-        this.setState({
-            generalHovered : true
-        })
-    }
-
-    handleDialogOpen = (label,day) => {
-        this.setState({
-            dialogOpen : true,
-            dialogLabel : label
-        })
-    }
-    handleDialogClose = () => {
-        this.setState({
-            dialogOpen : false
-        })
-    }
-
     render() {
-        const {classes, d,m,y,mon,weekday,dayGreaterThanToday,dayIsNotInCurrentMonth,isToday,day} = this.props
+        const {classes, d,m,y,dayIsNotInCurrentMonth,isToday,day} = this.props
+        // const {classes, d,m,y,mon,weekday,dayGreaterThanToday,dayIsNotInCurrentMonth,isToday,day} = this.props
+        const {dailyStockAndRequests} = this.props.data
+        let dailyStockAndRequestsFiltered = dailyStockAndRequests.filter( (dsr) => {
+            return this.props.data.selectedCenter === dsr.vaccineCenterId
+        })
 
         return (
             <Fragment>
@@ -141,21 +92,30 @@ export class CalendarDayCell extends Component {
                                     </b>
                                 </div>
                             </div>
-                            {/* <div className={classes.postTodo} >
-                                {this.state.isHovering & dayGreaterThanToday & !dayIsNotInCurrentMonth? <PostTodo day={day} /> : ''}
-                            </div> */}
+                            <div>
+                            {
+                                dailyStockAndRequestsFiltered.map(({ date, stock, requests}) => {
+                                    let dt_ = date.split("T")
+                                    let dt__ = dt_[0]
+                                    let dtFinal = dt__.split("-")
+                                    let yr = Number(dtFinal[0])
+                                    let mn = Number(dtFinal[1])
+                                    let dt = Number(dtFinal[2])
+
+                                    return <div>{dt === d & mn === m+1 & yr === y ? stock+" "+requests : ''} </div>
+                                }) 
+                            }
+                            </div>
                         </div>
                     </Paper>    
                 </Grid>
-            
             </Fragment>
         )
     }
 }
 
 const mapStateToProps = (state) => ({
-  data : state.data,
-  ui : state.ui
+  data : state.data
 })
 
 export default connect(mapStateToProps )(withStyles(styles)(CalendarDayCell))

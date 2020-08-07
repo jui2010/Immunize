@@ -44,11 +44,6 @@ const styles = (theme) => ({
     display: 'flex',
     flexDirection : 'row'
   },
-  postTodo : {
-    margin : '0px 0px auto 85px'   ,
-    position:'absolute',
-    float :'right'
-  }
 })
 
 export class CalendarCellFrame extends Component {
@@ -117,12 +112,12 @@ export class CalendarCellFrame extends Component {
                 let dayIsNotInCurrentMonth = (day < monthStart & day >= startDate) | (day > monthEnd & day <= endDate) ? true : false 
                 let dayGreaterThanToday = (day >= yesterday ) ? true : false 
                 cells.push(
-                    <CalendarDayCell d={d} m={m} y={y} mon={mon} weekday={weekday} dayGreaterThanToday ={dayGreaterThanToday} dayIsNotInCurrentMonth={dayIsNotInCurrentMonth} isToday={isToday} day={day} />
+                    <CalendarDayCell key={d-m-y} d={d} m={m} y={y} mon={mon} weekday={weekday} dayGreaterThanToday ={dayGreaterThanToday} dayIsNotInCurrentMonth={dayIsNotInCurrentMonth} isToday={isToday} day={day} />
                 )
                 day = addDays(day ,1)
             }
             rows.push(
-                <Grid container justify="space-evenly" alignItems="center" >
+                <Grid itemkey={day} container justify="space-evenly" alignItems="center" >
                     {cells}
                 </Grid>
             )

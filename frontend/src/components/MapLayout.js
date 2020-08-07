@@ -1,7 +1,10 @@
 import React, { Component , Fragment} from 'react'
 import withStyles from '@material-ui/core/styles/withStyles'
 import Leaflet from 'leaflet'
-import { Map, TileLayer, Marker, Popup } from 'react-leaflet'
+import { Map, TileLayer, Marker } from 'react-leaflet'
+// import { Map, TileLayer, Marker, Popup } from 'react-leaflet'
+
+import {setSelectedCenter} from '../redux/actions/dataActions'
 
 import {connect} from 'react-redux'
 
@@ -25,10 +28,8 @@ class MapLayout extends Component {
     name : ''
   }
 
-  handleClick = (center) => {
-    this.setState({
-      name : center
-    })
+  handleClick = (selectedCenter) => {
+    this.props.setSelectedCenter(selectedCenter)
   }
 
   showMarkers(){
@@ -36,7 +37,7 @@ class MapLayout extends Component {
 
     const rows = [] 
     rows.push(
-      vaccineCenters.map(vaccineCenter => <Marker name="marker" onClick ={() => this.handleClick(vaccineCenter.name)} position={[vaccineCenter.latitude, vaccineCenter.longitude ]} icon={myIcon} /> )
+      vaccineCenters.map(vaccineCenter => <Marker key={vaccineCenter._id} name="marker" onClick ={() => this.handleClick(vaccineCenter._id)} position={[vaccineCenter.latitude, vaccineCenter.longitude ]} icon={myIcon} /> )
     )
     return (
       <Fragment>{rows}</Fragment>
@@ -54,7 +55,7 @@ class MapLayout extends Component {
           {this.showMarkers()}
         </Map>
         <div>
-          center:{this.state.center}
+          center:{this.props.data.selectedCenter}
         </div>
       </Fragment>
       
@@ -66,4 +67,4 @@ const mapStateToProps = (state) => ({
   data : state.data
 })
 
-export default  connect(mapStateToProps, {})(withStyles(styles)(MapLayout))
+export default  connect(mapStateToProps, {setSelectedCenter})(withStyles(styles)(MapLayout))
