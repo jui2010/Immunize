@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component , Fragment} from 'react'
 import withStyles from '@material-ui/core/styles/withStyles'
 import Leaflet from 'leaflet'
 import { Map, TileLayer, Marker, Popup } from 'react-leaflet'
@@ -22,35 +22,42 @@ class MapLayout extends Component {
     lat: 19.075983,
     lng: 72.877655,
     zoom: 13,
+    name : ''
+  }
+
+  handleClick = (center) => {
+    this.setState({
+      name : center
+    })
+  }
+
+  showMarkers(){
+    const {vaccineCenters} = this.props.data
+
+    const rows = [] 
+    rows.push(
+      vaccineCenters.map(vaccineCenter => <Marker name="marker" onClick ={() => this.handleClick(vaccineCenter.name)} position={[vaccineCenter.latitude, vaccineCenter.longitude ]} icon={myIcon} /> )
+    )
+    return (
+      <Fragment>{rows}</Fragment>
+    )
   }
 
   render() {
-    const position = [this.state.lat, this.state.lng]
-    const {vaccineCenters} = this.props.data
-
-    let pos = vaccineCenters.map(vaccineCenter => {
-      return (
-        <Marker position={vaccineCenter.latitude, vaccineCenter.longitude} icon={myIcon}>
-          <Popup>
-            A pretty CSS3 popup. <br /> Easily customizable.
-          </Popup>
-        </Marker>
-      )
-    })
-
     return (
-      <Map style={{height: '100vh'}} center={position} zoom={this.state.zoom}>
-        <TileLayer
-          attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-        {/* <Marker position={position} icon={myIcon}>
-          <Popup>
-            A pretty CSS3 popup. <br /> Easily customizable.
-          </Popup>
-        </Marker> */}
-        {pos}
-      </Map>
+      <Fragment>
+        <Map style={{height: '100vh'}} center={[this.state.lat, this.state.lng]} zoom={this.state.zoom}>
+          <TileLayer
+            attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          />
+          {this.showMarkers()}
+        </Map>
+        <div>
+          center:{this.state.center}
+        </div>
+      </Fragment>
+      
     )
   }
 }

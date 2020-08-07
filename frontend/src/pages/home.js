@@ -23,7 +23,7 @@ class home extends Component {
 
     componentDidMount(){
         this.props.getVaccineCenters()
-        // this.props.getAllDailyStockAndRequests()
+        this.props.getAllDailyStockAndRequests()
     }
 
     render() {
