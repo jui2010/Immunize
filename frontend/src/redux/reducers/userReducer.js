@@ -2,7 +2,10 @@ import {SET_AUTHENTICATED_USER, LOADING_USER, SET_AUTHENTICATED, SET_UNAUTHENTIC
 
 const initialState = {
     authenticatedUser : {
-        _id : "123"
+        // _id : "5f2b112eddcfd79ef18d26e2",
+        // firstName : "Jui",
+        // lastName : "Thombre",
+        // email : "jui20oct@gmail.com"
     },
     authenticated : false,
     loading : false

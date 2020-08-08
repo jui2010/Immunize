@@ -1,4 +1,5 @@
 //user reducer types
+export const SIGNUP_USER = 'SIGNUP_USER' 
 export const SET_AUTHENTICATED_USER = 'SET_AUTHENTICATED_USER' 
 export const LOADING_USER = 'LOADING_USER' 
 export const SET_AUTHENTICATED = 'SET_AUTHENTICATED' 

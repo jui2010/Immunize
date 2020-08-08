@@ -25,6 +25,7 @@ class BookAppointment extends Component {
         if(Object.keys(this.props.user.authenticatedUser).length !== 0){
             const details = {
                 userId : this.props.user.authenticatedUser._id,
+                vaccineCenter : this.props.data.selectedCenter._id,
                 appointmentDate : this.props.day !== '' ? this.props.day : new Date()
             }
             this.props.bookAppointment(details)
@@ -57,6 +58,7 @@ class BookAppointment extends Component {
 }
 
 const mapStateToProps = (state) => ({
+    data : state.data,
     user : state.user
 })
 export default connect(mapStateToProps, {bookAppointment})(withStyles(styles)(BookAppointment))
