@@ -83,8 +83,7 @@ export class CalendarCellFrame extends Component {
     }
 
     showCells(){
-        const { currMonth , today } = this.props.ui
-
+        const { currMonth } = this.props.ui
         const monthStart = startOfMonth(currMonth)
         const monthEnd = endOfMonth(monthStart)
         const startDate = startOfWeek(monthStart) //start date from prev month
@@ -103,13 +102,15 @@ export class CalendarCellFrame extends Component {
                 let mon = format(day, 'MMM')
                 let weekday = format(day, 'EEE')
                 
-                let todayD = getDate(today)
-                let todayM = getMonth(today)
-                let todayY = getYear(today)
-                let yesterday = subDays(today, 1)
+                let todayD = getDate(currMonth)
+                let todayM = getMonth(currMonth)
+                let todayY = getYear(currMonth)
+                let yesterday = subDays(currMonth, 1)
 
                 let isToday = (d === todayD & m === todayM & y === todayY ) ? true : false
                 let dayIsNotInCurrentMonth = (day < monthStart & day >= startDate) | (day > monthEnd & day <= endDate) ? true : false 
+
+                console.log("yesterday"+yesterday)
                 let dayGreaterThanToday = (day >= yesterday ) ? true : false 
                 cells.push(
                     <CalendarDayCell key={d-m-y} d={d} m={m} y={y} mon={mon} weekday={weekday} dayGreaterThanToday ={dayGreaterThanToday} dayIsNotInCurrentMonth={dayIsNotInCurrentMonth} isToday={isToday} day={day} />

@@ -1,7 +1,9 @@
 import {SET_AUTHENTICATED_USER, LOADING_USER, SET_AUTHENTICATED, SET_UNAUTHENTICATED, EDIT_USER_DETAILS } from '../types'
 
 const initialState = {
-    user : {},
+    authenticatedUser : {
+        _id : "123"
+    },
     authenticated : false,
     loading : false
 }
@@ -18,14 +20,14 @@ export default function(state = initialState , action){
             return {
                 ...state,
                 authenticated : false,
-                user : ''
+                authenticatedUser : ''
             } 
 
         case SET_AUTHENTICATED_USER :
             return {
                 ...state,
                 loading : false,
-                user : action.payload
+                authenticatedUser : action.payload
             } 
 
         case LOADING_USER :
@@ -37,7 +39,7 @@ export default function(state = initialState , action){
         case EDIT_USER_DETAILS :
             return {
                 ...state,
-                otherUser : action.payload
+                authenticatedUser : action.payload
             }
             
         default : 

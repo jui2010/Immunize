@@ -1,9 +1,10 @@
 import React, { Component, Fragment } from 'react'
+import withStyles from '@material-ui/core/styles/withStyles'
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
 import format from "date-fns/format"
 
-import withStyles from '@material-ui/core/styles/withStyles'
+import BookAppointment from './BookAppointment'
 
 import {connect} from 'react-redux'
 
@@ -55,24 +56,23 @@ const styles = (theme) => ({
 
 export class CalendarDayCell extends Component {
     state = {
-        isHovering : false
+      isHovering : false
     }
 
     handleMouseHover = () => {
-        this.setState({
-            isHovering : true
-        })
+      this.setState({
+          isHovering : true
+      })
     }
 
     handleMouseNoHover = () => {
-        this.setState({
-            isHovering : false
-        })
+      this.setState({
+          isHovering : false
+      })
     }
 
     render() {
-        const {classes, d,m,y,dayIsNotInCurrentMonth,isToday,day} = this.props
-        // const {classes, d,m,y,mon,weekday,dayGreaterThanToday,dayIsNotInCurrentMonth,isToday,day} = this.props
+        const {classes, d,m,y,mon,weekday,dayGreaterThanToday,dayIsNotInCurrentMonth,isToday,day} = this.props
         const {dailyStockAndRequests} = this.props.data
         let dailyStockAndRequestsFiltered = dailyStockAndRequests.filter( (dsr) => {
             return this.props.data.selectedCenter === dsr.vaccineCenterId
@@ -91,18 +91,21 @@ export class CalendarDayCell extends Component {
                                         {format(day, 'd')}
                                     </b>
                                 </div>
+                                <div className={classes.makeRequest} >
+                                  {this.state.isHovering & dayGreaterThanToday & !dayIsNotInCurrentMonth ? <BookAppointment day={day} /> : ''}
+                                </div>
                             </div>
                             <div>
                             {
                                 dailyStockAndRequestsFiltered.map(({ date, stock, requests}) => {
-                                    let dt_ = date.split("T")
-                                    let dt__ = dt_[0]
-                                    let dtFinal = dt__.split("-")
-                                    let yr = Number(dtFinal[0])
-                                    let mn = Number(dtFinal[1])
-                                    let dt = Number(dtFinal[2])
+                                  let dt_ = date.split("T")
+                                  let dt__ = dt_[0]
+                                  let dtFinal = dt__.split("-")
+                                  let yr = Number(dtFinal[0])
+                                  let mn = Number(dtFinal[1])
+                                  let dt = Number(dtFinal[2])
 
-                                    return <div>{dt === d & mn === m+1 & yr === y ? stock+" "+requests : ''} </div>
+                                  return <div>{dt === d & mn === m+1 & yr === y ? stock+" "+requests : ''} </div>
                                 }) 
                             }
                             </div>

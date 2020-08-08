@@ -49,20 +49,18 @@ def getAllUsers():
     for document in documents:
         document['_id'] = str(document['_id'])
         response.append(document)
-
     return json.dumps(response)
 
 #post a request
-@app.route('/makeRequest', methods=['POST'])
-def postRequest():
-    body = request.get_json()
-    movie = Movie(**body).save()
-    id = movie.id
-    return {'id': str(id)}, 200
+@app.route('/bookAppointment', methods=['POST'])
+def bookAppointment():
+    print(request.get_json())
+    db.requests.insert_one(request.get_json())
+    return "appointment booked"
 
 #add an user
 @app.route("/addUser", methods=['POST'])
 def create_user():
     print(request.get_json())
     db.users.insert_one(request.get_json())
-    return request.get_json()
+    return "user added"
