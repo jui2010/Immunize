@@ -11,6 +11,9 @@ import CalendarCellFrame from '../components/CalendarCellFrame'
 
 const styles = (theme) => ({
     ...theme.spread,
+    section : {
+        padding : '20px'
+    },
     mainDiv : {
         display: 'flex', 
         flexDirection : 'column',
@@ -30,11 +33,11 @@ class home extends Component {
         const { classes } = this.props
 
         return (
-            <Grid container spacing={5} style={{border: '1px solid black'}}>
-                <Grid item sm={4} className ={classes.sideBar} style={{border: '1px solid black'}}>
+            <Grid container style={{border: '1px solid black'}}>
+                <Grid item sm={4} className ={classes.section} style={{border: '1px solid black'}}>
                     <MapLayout />
                 </Grid>
-                <Grid item sm={8} className ={classes.sideBar} style={{border: '1px solid black'}}>
+                <Grid item sm={8} className ={classes.section} style={{border: '1px solid black'}}>
                     <div className={classes.mainDiv}>
                         <CalendarHeader />
                         <CalendarCellFrame />

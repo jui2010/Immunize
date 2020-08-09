@@ -20,13 +20,13 @@ const styles = (theme) => ({
     letterSpacing: '1px'
   },
   mon : {
-    fontSize: '50px',
-    color:'#d1c4e9',
+    fontSize: '30px',
+    color:'#a058e8',
     letterSpacing: '6px',
     fontFamily: 'Bebas Neue'
   },
   yr : {
-    fontSize: '20px',
+    fontSize: '15px',
     color: '#9575cd' 
   }
 })
@@ -50,8 +50,8 @@ export class CalendarHeader extends Component {
 
         {/* get previous month */}
         <Grid item xs ={1}>
-          <IconButton  onClick={this.prevMonth} style={{position:'absolute', zIndex:1000}}>
-            <ArrowBackIosIcon />
+          <IconButton  onClick={this.prevMonth} style={{position:'absolute', zIndex:1000, fontSize : '12px'}}>
+            <ArrowBackIosIcon style={{ fontSize : '20px'}}/>
           </IconButton>
         </Grid>
 
@@ -68,7 +68,7 @@ export class CalendarHeader extends Component {
         {/* get next month */}
         <Grid item xs ={1}>
           <IconButton onClick={this.nextMonth} style={{position:'absolute', zIndex:1000,margin:'auto 0px auto 57px'}} >
-            <ArrowForwardIosIcon />
+            <ArrowForwardIosIcon style={{ fontSize : '20px'}}/>
           </IconButton>
         </Grid>
     </Grid>

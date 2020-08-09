@@ -78,16 +78,16 @@ class MapLayout extends Component {
     return (
       <Fragment>
         {/* map titles */}
-        <div>
-          {Object.keys(this.props.data.selectedCenter).length === 0 ? "Please selected the nearest vaccine center" 
-          :  this.props.data.selectedCenter.name}
+        <div style={{textTransform: 'bold'}}>
+          {Object.keys(this.props.data.selectedCenter).length === 0 ? <b>Please selected the nearest vaccine center</b>
+          :  <b>{this.props.data.selectedCenter.name}</b>}
         </div>
-        <div> 
-          Showing vaccine availability for : {selDate} 
+        <div style={{fontSize : '14px'}}> 
+          Showing vaccine availability for : <b style={{color : '#47474b'}} >{selDate} </b>
         </div>
 
         {/* actual map */}
-        <Map style={{height: '60vh'}} center={[this.state.lat, this.state.lng]} zoom={10}>
+        <Map style={{height: '80vh'}} center={[this.state.lat, this.state.lng]} zoom={12}>
           <TileLayer
             attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

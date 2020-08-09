@@ -43,7 +43,7 @@ class BookAppointment extends Component {
         return (
             <Fragment>
                 <MyButton tip ={'Book appointment'} onClick={this.handleOpen}>
-                    <AddCircleOutlineIcon color="secondary" style={{fontSize : '20px'}}/>
+                    <AddCircleOutlineIcon style={{fontSize : '18px', color : '#a058e8'}}/>
                 </MyButton>
                 
                 <Dialog open={this.state.open} onClose={this.handleClose}>

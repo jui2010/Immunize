@@ -16,24 +16,12 @@ const styles = (theme) => ({
     textAlign : 'center',
   },
   day : {
-    width: theme.spacing(12),
-    height: theme.spacing(12),
-    margin : '3px',
+    width: theme.spacing(11),
+    height: theme.spacing(11),
+    border : '0.1px solid #dedce0'
   },
   dayDiv : {
-    marginLeft : '10px',
-    marginTop : '5px',
     float :'left'
-  },
-  weekday : {
-    width: theme.spacing(12),
-    height: theme.spacing(3),
-    margin : '7px 7px 0px 7px',
-    color : 'white',
-    display: 'flex',
-    justifyContent:'center',
-    backgroundColor : '#bf360c',
-    textTransform : 'uppercase',
   },
   dayTopFrame : {
     display: 'flex',
@@ -71,21 +59,22 @@ export class CalendarDayCell extends Component {
 
         return (
             <Fragment>
-                 
                 <Grid itemkey={y-m-d} onMouseEnter={this.handleMouseHover} onMouseLeave={this.handleMouseNoHover}>
-                    <Paper elevation={3} className={classes.day} onClick={() => this.handleSelectedDate(day)}
+                    <div className={classes.day} onClick={() => this.handleSelectedDate(day)}
                     style={{backgroundColor : dayIsNotInCurrentMonth ? '#f7f7f7' : 'white'}}>
                         <div className={classes.dayTopFrame} > 
                             <div className={classes.dayDiv} style={{color : isToday & !dayIsNotInCurrentMonth ? 'white': dayIsNotInCurrentMonth ? '#e0e0e0' : 'black' }}>
-                                <div style={{backgroundColor: isToday & !dayIsNotInCurrentMonth ? '#484848' : '', borderRadius: isToday & !dayIsNotInCurrentMonth ? '50%' : '', padding : '0px 3px'}}>
+                                <div style={{backgroundColor: isToday & !dayIsNotInCurrentMonth ? '#484848' : '', borderRadius: isToday & !dayIsNotInCurrentMonth ? '50%' : '', padding : '0px 3px' }}>
                                     <b>
                                         {format(day, 'd')}
                                     </b>
                                 </div>
-                                <div className={classes.makeRequest} >
+                               
+                            </div>
+                            <br/>
+                            <div className={classes.makeRequest} >
                                   {this.state.isHovering & dayGreaterThanToday & !dayIsNotInCurrentMonth ? <BookAppointment day={day} /> : ''}
                                 </div>
-                            </div>
                             <div>
                             {
                               dailyStockAndRequestsFiltered.map(({ date, stock, requests}) => {
@@ -96,12 +85,19 @@ export class CalendarDayCell extends Component {
                                 let mn = Number(dtFinal[1])
                                 let dt = Number(dtFinal[2])
 
-                                return <div>{dt === d & mn === m+1 & yr === y ? stock+" "+requests : ''} </div>
+                                return dt === d & mn === m+1 & yr === y ? 
+                                  <div style={{marginTop : '30px'}}>
+                                    <div style={{color : 'white', backgroundColor: '#e03e72', padding: '2px'}}>
+                                      {stock} S
+                                    </div>
+                                    <div style={{color : 'white', backgroundColor: '#0013ad', padding: '2px'}}>
+                                      {requests} R</div>
+                                  </div> : ''
                               }) 
                             }
                             </div>
                         </div>
-                    </Paper>    
+                    </div>    
                 </Grid>
             </Fragment>
         )
