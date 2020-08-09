@@ -10,6 +10,9 @@ import {connect} from 'react-redux'
 
 const styles = (theme) => ({
     ...theme.spread,
+    mainGrid : {
+        marginTop : '1px'
+    }
 })
 
 class profile extends Component {

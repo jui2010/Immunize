@@ -113,3 +113,18 @@ def totalRequests():
 def totalVaccines():
     documents = db.requests.find()
     return json.dumps(len(documents))
+
+@app.route('/upload', methods=['POST'])
+def upload():
+    target = os.path.join(APP_ROOT, 'assets/')  #folder path
+    if not os.path.isdir(target):
+            os.mkdir(target)     # create folder if not exits
+    # face_db_table = db.mongo.db.faces  # database table name
+    if request.method == 'POST':
+        for upload in request.files.getlist("face_image"): #multiple image handel
+            filename = secure_filename(upload.filename)
+            destination = "/".join([target, filename])
+            upload.save(destination)
+            db.pics.insert({'face_image': filename})   #insert into database mongo db
+
+        return 'Image Upload Successfully'

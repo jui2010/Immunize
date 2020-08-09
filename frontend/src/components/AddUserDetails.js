@@ -3,8 +3,20 @@ import withStyles from '@material-ui/core/styles/withStyles'
 import Grid from '@material-ui/core/Grid'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
+import InputLabel from '@material-ui/core/InputLabel'
+import MenuItem from '@material-ui/core/MenuItem'
+import Typography from '@material-ui/core/Typography'
+import FormControl from '@material-ui/core/FormControl'
+import Select from '@material-ui/core/Select'
+import HelpOutlineIcon from '@material-ui/icons/HelpOutline'
+import Tooltip from '@material-ui/core/Tooltip'
+
+// import img from '../assets/pan.jpg'
+import ImageUploader from 'react-images-upload'
 
 import axios from 'axios'
+
+import OCR from './OCR'
 
 import {connect} from 'react-redux'
 import {editUserDetails} from '../redux/actions/userActions'
@@ -45,24 +57,22 @@ export class AddUserDetails extends Component {
         username : this.props.user.authenticatedUser.username,
         location : '',
         dob : '',
-        panNumber : ''
+        age : '',
+        panNumber : '',
+        pictures: '',
+        occupation : '',
+        disease : ''
     } 
-
-    handleEditUsername = () => {
+    
+    onDrop = (picture) => {
         this.setState({
-            editUsername : true
+            pictures: picture
         })
     }
 
     handleEditLocation = () => {
         this.setState({
         editLocation : true
-        })
-    }
-
-    handleNoEditUsername = () => {
-        this.setState({
-        editUsername : false
         })
     }
 
@@ -74,7 +84,7 @@ export class AddUserDetails extends Component {
 
     handleChange = (event) =>{
         this.setState({
-        [event.target.name] : event.target.value 
+            [event.target.name] : event.target.value 
         })
     }
 
@@ -116,68 +126,119 @@ export class AddUserDetails extends Component {
             .catch(err => console.log(err) )
 
         console.log(userDetails)
-        //edit user details
-        // this.props.editUserDetails()
-  }
+    }
 
-  render() {
-    // const { classes } = this.props
-    return (
-        <Grid item xs={12} sm container>
-            <Grid item xs={11} container direction="column" spacing={2}>
+    render() {
+        const { classes } = this.props
+        return (
+            <Grid item xs={12} sm container  spacing={2}>
+                <Grid item xs={11} container style={{fontSize: '16px'}}>
+                    <div><b> Please provide additional information to complete your application </b>
+                        <Tooltip title={"People from age groups(<18 and 50+), essential service workers and those suffering from any pre-diagnosed disease would be given a higher priority than the healthy individuals"}  placement="top"><HelpOutlineIcon style={{fontSize : '15px', color : '#424242'}} /></Tooltip>
+                    </div>
+                </Grid>
 
-            <form onSubmit={this.handleSubmit} >
-
-                <TextField name="firstName" id="firstName" label="First Name" type="text" onChange={this.handleChange}
-                    style={{marginBottom: '10px'}} value={this.state.firstName} variant="outlined" fullWidth />
-
-                <TextField name="lastName" id="lastName" label="Last Name" type="text" onChange={this.handleChange}
-                    style={{marginBottom: '10px'}} value={this.state.lastName} variant="outlined" fullWidth />
+                <Grid item xs={11} container direction="row" spacing={2}>
                 
-                <TextField name="username" id="username" label="Username" type="text" onChange={this.handleChange} 
-                    style={{marginBottom: '10px'}} value={this.state.username} variant="outlined" fullWidth />
+                    {/* age group */}
+                    <Grid container item direction="row"  style={{border : '1px solid black'}} >
+                        <Grid item xs={5} >
+                            <Typography>
+                                Enter your age
+                            </Typography>
+                        </Grid>
+                        <Grid item xs={7}>
+                            <TextField name="age" id="age" type="text" onChange={this.handleChange} 
+                            value={this.state.age} variant="outlined" fullWidth />
+                        </Grid>
+                    </Grid>
 
-                <TextField name="location" id="location" label="Location" type="text" onChange={this.handleChange} 
-                    style={{marginBottom: '10px'}} value={this.state.location} variant="outlined" fullWidth />
+                    {/* disease */}
+                    <Grid container item direction="row"  style={{border : '1px solid black'}} >
+                        <Grid item xs={5}>
+                            <Typography>
+                                Are you suffering from any disease
+                            </Typography>
+                        </Grid>
+                        <Grid item xs={7} >
+                            <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                                <InputLabel ></InputLabel>
+                                <Select
+                                value={this.state.disease}
+                                onChange={this.handleChange}
+                                >
+                                <MenuItem value="">
+                                    <em>None</em>
+                                </MenuItem>
+                                <MenuItem value={"No"}>No</MenuItem>
+                                <MenuItem value={"Yes"}>Yes</MenuItem>
+                                </Select>
+                            </FormControl>
+                        </Grid>
+                    </Grid>
 
-                <Button type="submit" variant="contained" color="secondary" 
-                    style={{fontFamily: 'Poppins', margin : '10px 5px', fontSize : '16px', color : 'white'}}>        
-                    Submit
-                </Button>
+                    {/* occupation */}
+                    <Grid container item direction="row"  style={{border : '1px solid black'}} >
+                        <Grid item xs={5} >
+                            <Typography>
+                                Enter your occupation
+                            </Typography>
+                        </Grid>
+                        <Grid item xs={7}>
+                            <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                                <InputLabel ></InputLabel>
+                                <Select
+                                id="occupation"
+                                name="occupation"
+                                value={this.state.occupation}
+                                onChange={this.handleChange}
+                                >
+                                <MenuItem value="">
+                                    <em>None</em>
+                                </MenuItem>
+                                <MenuItem value={"Essential"}>Essential Service Worker</MenuItem>
+                                <MenuItem value={"Blue collar worker"}>Blue collar worker</MenuItem>
+                                <MenuItem value={"Self"}>Business</MenuItem>
+                                <MenuItem value={"Full"}>Employed full-time</MenuItem>
+                                <MenuItem value={"Full-remote"}>Employed full-time (Remote)</MenuItem>
+                                <MenuItem value={"Others"}>Others</MenuItem>
+                                </Select>
+                            </FormControl>
+                        </Grid>
+                    </Grid>
 
-            </form>
-
-
-                {/* {this.state.editUsername ? 
-                    <Fragment>
-                        <InputBase
-                        id="username"
-                        name="username"
-                        multiline
-                        className={classes.postQ}
-                        value={this.state.username}
-                        inputProps={{ 'aria-label': 'Edit username' }}
-                        onChange={this.handleChange}
-                        fullWidth
-                        /> 
-                        <IconButton>
-                            <CheckBoxIcon color="secondary" onClick={this.handlePostBody} />
-                        </IconButton>
-                        <IconButton>
-                            <ClearIcon color="secondary" onClick={this.handleNoEditUsername}/>
-                        </IconButton>
-                    </Fragment> :
-                    <Typography variant="body2" color="textSecondary" className={classes.qbody} onDoubleClick={this.handleEditUsername}>
-                        {this.state.username}
-                    </Typography>
-                } 
-                <Typography variant="body2" color="textSecondary" className={classes.qbody} onDoubleClick={this.handleEditUsername}>
-                    {this.state.firstName}
-                </Typography> */}
+                    {/* location */}
+                    <Grid container item direction="row"  style={{border : '1px solid black'}} >
+                        <Grid item xs={5} >
+                            <Typography>
+                                Enter your location
+                            </Typography>
+                        </Grid>
+                        <Grid item xs={7}>
+                            <TextField name="location" id="location" type="text" onChange={this.handleChange} 
+                            value={this.state.location} variant="outlined" fullWidth />
+                        </Grid>
+                    </Grid>
+                    
+                    Upload your identity proof
+                    <ImageUploader
+                        // withIcon={true}
+                        buttonText='Choose images'
+                        onChange={this.onDrop}
+                        imgExtension={['.jpg', '.gif', '.png', '.gif']}
+                        maxFileSize={5242880}
+                    />
+                    <OCR />
+                    
+                
+                    <Button type="submit" variant="contained" color="secondary" 
+                        style={{fontFamily: 'Poppins', margin : '10px 5px', fontSize : '16px', color : 'white'}}>        
+                        Save Changes
+                    </Button>
+                </Grid>
             </Grid>
-        </Grid>
-    )
-  }
+        )
+    }
 }
 
 const mapStateToProps = (state) => ({

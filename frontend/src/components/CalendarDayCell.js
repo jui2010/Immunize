@@ -99,7 +99,6 @@ export class CalendarDayCell extends Component {
                                 return <div>{dt === d & mn === m+1 & yr === y ? stock+" "+requests : ''} </div>
                               }) 
                             }
-                            {console.log(dailyStockAndRequestsFiltered)}  
                             </div>
                         </div>
                     </Paper>    
