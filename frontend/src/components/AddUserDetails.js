@@ -1,22 +1,6 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import withStyles from '@material-ui/core/styles/withStyles'
-import {Link } from 'react-router-dom'
-import Paper from '@material-ui/core/Paper'
 import Grid from '@material-ui/core/Grid'
-import Typography from '@material-ui/core/Typography'
-import Zoom from '@material-ui/core/Zoom'
-import ButtonBase from '@material-ui/core/ButtonBase'
-import Avatar from '@material-ui/core/Avatar'
-import Chip from '@material-ui/core/Chip'
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown'
-import CheckCircleIcon from '@material-ui/icons/CheckCircle'
-import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp'
-import MuiLink from '@material-ui/core/Link'
-import ScheduleIcon from '@material-ui/icons/Schedule'
-import InputBase from '@material-ui/core/InputBase'
-import CheckBoxIcon from '@material-ui/icons/CheckBox'
-import ClearIcon from '@material-ui/icons/Clear'
-import IconButton from '@material-ui/core/IconButton'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 
@@ -51,50 +35,42 @@ const styles = (theme) => ({
 
 export class AddUserDetails extends Component {
 
-  state = {
-    editUsername : false,
-    editLocation : false,
-    firstName : this.props.user.authenticatedUser.firstName,
-    lastName : this.props.user.authenticatedUser.lastName,
-    profilePicture : this.props.user.authenticatedUser.profilePicture,
-    email : this.props.user.authenticatedUser.email,
-    username : this.props.user.authenticatedUser.username,
-    location : '',
-    dob : '',
-    panNumber : ''
-  } 
+    state = {
+        editUsername : false,
+        editLocation : false,
+        firstName : this.props.user.authenticatedUser.firstName,
+        lastName : this.props.user.authenticatedUser.lastName,
+        profilePicture : this.props.user.authenticatedUser.profilePicture,
+        email : this.props.user.authenticatedUser.email,
+        username : this.props.user.authenticatedUser.username,
+        location : '',
+        dob : '',
+        panNumber : ''
+    } 
 
-  handleEditUsername = () => {
-    this.setState({
-        editUsername : true
-    })
-  }
+    handleEditUsername = () => {
+        this.setState({
+            editUsername : true
+        })
+    }
 
-  handleEditLocation = () => {
-    this.setState({
-      editLocation : true
-    })
-  }
+    handleEditLocation = () => {
+        this.setState({
+        editLocation : true
+        })
+    }
 
-  handleNoEditUsername = () => {
-    this.setState({
-      editUsername : false
-    })
-  }
+    handleNoEditUsername = () => {
+        this.setState({
+        editUsername : false
+        })
+    }
 
-  handleNoEditLocation = () => {
-    this.setState({
-      editLocation : false
-    })
-  }
-
-//   handleSubmitUserDetails = (event) => {
-//     event.preventDefault()
-//     const newQuestion = {questionTitle : this.state.questionTitle}
-//     this.props.updateQuestionTitle(this.props.question._id, newQuestion)
-    
-//     this.handleNoEditTitle()
-//   }
+    handleNoEditLocation = () => {
+        this.setState({
+        editLocation : false
+        })
+    }
 
     handleChange = (event) =>{
         this.setState({
@@ -135,20 +111,17 @@ export class AddUserDetails extends Component {
                         payload : userDetails
                     })
                 })
-                
+
             })
             .catch(err => console.log(err) )
 
         console.log(userDetails)
-        
-
-
         //edit user details
         // this.props.editUserDetails()
   }
 
   render() {
-    const { classes } = this.props
+    // const { classes } = this.props
     return (
         <Grid item xs={12} sm container>
             <Grid item xs={11} container direction="column" spacing={2}>

@@ -1,8 +1,12 @@
 import React, { Component , Fragment} from 'react'
 import withStyles from '@material-ui/core/styles/withStyles'
 import Leaflet from 'leaflet'
-import { Map, TileLayer, Marker } from 'react-leaflet'
-// import { Map, TileLayer, Marker, Popup } from 'react-leaflet'
+import { Map, TileLayer, Marker , CircleMarker, Popup} from 'react-leaflet'
+
+import format from "date-fns/format"
+import getDate from 'date-fns/getDate'
+import getMonth from 'date-fns/getMonth'
+import getYear from 'date-fns/getYear'
 
 import {setSelectedCenter} from '../redux/actions/dataActions'
 
@@ -24,20 +28,44 @@ class MapLayout extends Component {
   state = {
     lat: 19.075983,
     lng: 72.877655,
-    zoom: 13,
     name : ''
   }
 
-  handleClick = (selectedCenter) => {
+  handleClick = (selectedCenterId, selectedCenterName) => {
+    let selectedCenter = {
+      _id : selectedCenterId,
+      name : selectedCenterName          
+    }
     this.props.setSelectedCenter(selectedCenter)
   }
 
   showMarkers(){
     const {vaccineCenters} = this.props.data
+    const {dailyStockAndRequests} = this.props.data
+    const {selectedDate} = this.props.data
 
+    // filter out total stock and requests for the selected date
+    let dailyStockAndRequestsFiltered = dailyStockAndRequests.filter( (dsr) => {
+      let dt_ = dsr.date.split("T")
+      let dt__ = dt_[0]
+      let dtFinal = dt__.split("-")
+      return getDate(selectedDate) === Number(dtFinal[2]) & getMonth(selectedDate)+1 === Number(dtFinal[1]) & getYear(selectedDate) === Number(dtFinal[0])
+    })
+    
+    // console.log(dailyStockAndRequestsFiltered)
+    // create location markers for all the vaccine centers
     const rows = [] 
     rows.push(
-      vaccineCenters.map(vaccineCenter => <Marker key={vaccineCenter._id} name="marker" onClick ={() => this.handleClick(vaccineCenter._id)} position={[vaccineCenter.latitude, vaccineCenter.longitude ]} icon={myIcon} /> )
+      vaccineCenters.map(vaccineCenter => 
+      <Fragment>
+        <Marker key={vaccineCenter._id} name="marker" onClick ={() => this.handleClick(vaccineCenter._id, vaccineCenter.name )} position={[vaccineCenter.latitude, vaccineCenter.longitude ]} icon={myIcon} >
+          <Popup>
+            <div>Total Stock : {dailyStockAndRequestsFiltered.filter(dsrf => {return dsrf.vaccineCenterId === vaccineCenter._id}).map(data => {return data.stock})[0] | 0}</div>
+            <div>Total Request : {dailyStockAndRequestsFiltered.filter(dsrf => {return dsrf.vaccineCenterId === vaccineCenter._id}).map(data => {return data.requests})[0] | 0}</div>
+          </Popup>
+        </Marker> 
+      </Fragment>    
+      )
     )
     return (
       <Fragment>{rows}</Fragment>
@@ -45,18 +73,32 @@ class MapLayout extends Component {
   }
 
   render() {
+    const {selectedDate} = this.props.data
+    let selDate = format(selectedDate, 'do') +" "+ format(selectedDate, 'MMM') +" "+ format(selectedDate, 'yyyy') 
     return (
       <Fragment>
-        <Map style={{height: '100vh'}} center={[this.state.lat, this.state.lng]} zoom={this.state.zoom}>
+        {/* map titles */}
+        <div>
+          {Object.keys(this.props.data.selectedCenter).length === 0 ? "Please selected the nearest vaccine center" 
+          :  this.props.data.selectedCenter.name}
+        </div>
+        <div> 
+          Showing vaccine availability for : {selDate} 
+        </div>
+
+        {/* actual map */}
+        <Map style={{height: '60vh'}} center={[this.state.lat, this.state.lng]} zoom={10}>
           <TileLayer
             attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
+          {/* showing location markers on map */}
           {this.showMarkers()}
+
+          <CircleMarker center={[51.51, -0.12]} color="white" radius={5}>
+          <Popup>Popup in CircleMarker</Popup>
+        </CircleMarker>
         </Map>
-        <div>
-          center:{this.props.data.selectedCenter}
-        </div>
       </Fragment>
       
     )
@@ -64,7 +106,8 @@ class MapLayout extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  data : state.data
+  data : state.data,
+  ui : state.ui
 })
 
 export default  connect(mapStateToProps, {setSelectedCenter})(withStyles(styles)(MapLayout))

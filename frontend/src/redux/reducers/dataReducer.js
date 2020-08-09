@@ -1,12 +1,13 @@
 import {SET_USERS, SET_REQUESTS, SET_VACCINE_CENTER ,GET_VACCINE_CENTERS,BOOK_APPOINTMENT,
-    EDIT_APPOINTMENT,DELETE_APPOINTMENT, GET_DAILY_STOCK, SELECTED_CENTER} from '../types'
+    EDIT_APPOINTMENT,DELETE_APPOINTMENT, GET_DAILY_STOCK, SELECTED_CENTER,SELECTED_DATE} from '../types'
 
 const initialState = {
    users : [],
    appointmentRequests : [],
    vaccineCenters : [],
    dailyStockAndRequests : [],
-   selectedCenter: ''
+   selectedDate: new Date(),
+   selectedCenter: {}
 }
 
 export default function (state = initialState, action){
@@ -22,6 +23,12 @@ export default function (state = initialState, action){
         return {
             ...state,
             selectedCenter : action.payload,
+        }
+
+        case SELECTED_DATE : 
+        return {
+            ...state,
+            selectedDate : action.payload,
         }
 
         case SET_REQUESTS : 

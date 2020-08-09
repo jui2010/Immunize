@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import withStyles from '@material-ui/core/styles/withStyles'
-import LocationOnIcon from '@material-ui/icons/LocationOn'
 import EmailIcon from '@material-ui/icons/Email'
-import FormatQuoteIcon from '@material-ui/icons/FormatQuote'
 
 import {connect} from 'react-redux'
 

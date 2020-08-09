@@ -1,5 +1,4 @@
-import {SET_AUTHENTICATED , LOADING_USER, SET_UNAUTHENTICATED, SET_AUTHENTICATED_USER,
- EDIT_USER_DETAILS} from '../types'
+import {EDIT_USER_DETAILS} from '../types'
 import axios from 'axios'
 
 //edit user details

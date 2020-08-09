@@ -101,3 +101,15 @@ def edit_user():
     #     doc1.update({"firstName":"juiii"})
 
     return "updated" 
+
+#get count of total vaccines requests
+@app.route('/totalRequests')
+def totalRequests():
+    documents = db.requests.find()
+    return json.dumps(len(documents))
+
+#get count of total vaccines distributed
+@app.route('/totalVaccinesDistributed')
+def totalVaccines():
+    documents = db.requests.find()
+    return json.dumps(len(documents))

@@ -22,11 +22,12 @@ class BookAppointment extends Component {
         this.setState({
             open : true
         })
-        if(Object.keys(this.props.user.authenticatedUser).length !== 0){
+        if(Object.keys(this.props.user.authenticatedUser).length !== 0 &  this.props.data.selectedCenter !== ""){
             const details = {
                 userId : this.props.user.authenticatedUser._id,
                 vaccineCenter : this.props.data.selectedCenter._id,
-                appointmentDate : this.props.day !== '' ? this.props.day : new Date()
+                appointmentDate : this.props.day,
+                createdAt : new Date()
             }
             this.props.bookAppointment(details)
         }
@@ -48,7 +49,9 @@ class BookAppointment extends Component {
                 <Dialog open={this.state.open} onClose={this.handleClose}>
                     <DialogTitle >
                         <div style={{fontFamily: 'Bebas Neue'}}>
-                            {Object.keys(this.props.user.authenticatedUser).length === 0 ? "Please login" : "Appointment booked"}
+                            {Object.keys(this.props.user.authenticatedUser).length === 0 ?
+                            "Please login" :  this.props.data.selectedCenter === ""  ? "Please select a vaccine center" 
+                            : "Appointment booked"}
                         </div>
                     </DialogTitle>
                 </Dialog>

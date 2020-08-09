@@ -110,7 +110,6 @@ export class CalendarCellFrame extends Component {
                 let isToday = (d === todayD & m === todayM & y === todayY ) ? true : false
                 let dayIsNotInCurrentMonth = (day < monthStart & day >= startDate) | (day > monthEnd & day <= endDate) ? true : false 
 
-                console.log("yesterday"+yesterday)
                 let dayGreaterThanToday = (day >= yesterday ) ? true : false 
                 cells.push(
                     <CalendarDayCell key={d-m-y} d={d} m={m} y={y} mon={mon} weekday={weekday} dayGreaterThanToday ={dayGreaterThanToday} dayIsNotInCurrentMonth={dayIsNotInCurrentMonth} isToday={isToday} day={day} />
@@ -118,7 +117,7 @@ export class CalendarCellFrame extends Component {
                 day = addDays(day ,1)
             }
             rows.push(
-                <Grid itemkey={day} container justify="space-evenly" alignItems="center" >
+                <Grid key={day} container justify="space-evenly" alignItems="center" >
                     {cells}
                 </Grid>
             )

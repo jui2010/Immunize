@@ -3,9 +3,9 @@ import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Button from '@material-ui/core/Button'
 import withStyles from '@material-ui/core/styles/withStyles'
-import Typography from '@material-ui/core/Typography'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
+import logo from '../assets/immunize_logo.gif'
 
 import { useAuth0 } from "@auth0/auth0-react"
 
@@ -20,10 +20,15 @@ const styles = (theme) => ({
     menuButton: {
         marginRight: theme.spacing(2),
     },
-    title: {
-        flexGrow: 1,
-        color : 'white'
+    login: {
+        // flex : 1,
+        // alignItems : 'right',
+        fontSize : '20px',
+        marginRight : '10px'
     },
+    profile : {
+        borderRadius : '5px'
+    }
 })
 
 
@@ -68,37 +73,36 @@ const NavBar = (props) => {
             })   
     }
 
-
-
     return (
         <div >
-            <AppBar position="static" style={{marginBottom: '30px'}}>
-                <Toolbar>
-                <Typography variant="h6" >
-                    Immunize
-                </Typography>
+            <AppBar position="relative" color="transparent" style={{marginBottom: '10px'}}>
+                <Toolbar style={{ height: 50}}>
+
+                    <img src={logo} alt="Profile" width="130" height="50" />
+
                     {!isAuthenticated && (
-                        <Button
-                        className={classes.title}
-                        color="primary"
-                        onClick={() => loginWithRedirect()}>
+                        <Button className={classes.login} color="primary" onClick={() => loginWithRedirect()}>
                             Login
+                        </Button>)}
+                    
+                    {!isAuthenticated && (
+                        <Button className={classes.login} color="primary" onClick={() => loginWithRedirect()}>
+                            Signup
                         </Button>)}
 
                     {isAuthenticated && ( 
                         <Button component = {Link} to="/profile">
-                            <img
-                            src={user.picture}
-                            alt="Profile"
-                            width="50"
-                            />
+                            <img src={user.picture} alt="Profile" width="50" classname={classes.profile} />
                         </Button>
                     )}
 
                     {isAuthenticated && ( 
-                    <Button color="secondary" component = {Link} to="/home" >home</Button>
+                        <Button color="secondary" component = {Link} to="/home" >Home</Button>
                     )}
                         
+                    {isAuthenticated && ( 
+                        <Button color="secondary" component = {Link} to="/dashboard" >Dashboard</Button>
+                    )}
                 </Toolbar>
             </AppBar>
         </div>

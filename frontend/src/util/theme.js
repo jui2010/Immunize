@@ -20,5 +20,8 @@ export default{
       typography: {
         useNextVariants: true
       }
-    }
+    },
+    appBar: {
+      height: 20, // Instead of 64
+    },
   }

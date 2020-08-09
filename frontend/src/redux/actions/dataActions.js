@@ -1,4 +1,4 @@
-import {GET_VACCINE_CENTERS, GET_DAILY_STOCK, SELECTED_CENTER, BOOK_APPOINTMENT} from '../types'
+import {GET_VACCINE_CENTERS, GET_DAILY_STOCK, SELECTED_CENTER, BOOK_APPOINTMENT,SELECTED_DATE} from '../types'
 import axios from 'axios'
 
 //get all the vaccine centers
@@ -38,7 +38,6 @@ export const bookAppointment = (details) => (dispatch) => {
         .catch(err => console.log(err) )
 }
 
-
 //set selected center from the map
 export const setSelectedCenter = (selectedCenter) => (dispatch) => {
     dispatch({
@@ -46,4 +45,11 @@ export const setSelectedCenter = (selectedCenter) => (dispatch) => {
         payload : selectedCenter
     })
 }
- 
+
+//set selected center from the map
+export const setSelectedDate = (selectedDate) => (dispatch) => {
+    dispatch({
+        type : SELECTED_DATE,
+        payload : selectedDate
+    })
+}
