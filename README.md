@@ -68,13 +68,24 @@ Admin can add a new vaccine center by typing the address, which will be geo-code
 ![](https://github.com/jui2010/Immunize/blob/master/frontend/src/assets/new_center_gif.gif)
 
 
+## Prerequisites
+Before running this locally you must have Node installed
+
+## Development
+
+1. ```git clone https://github.com/jui2010/Immunize```
+2. ```npm install```
+3. ```npm start```
+
+## Tech Stack used
+Node, React, MongoDB, Flask, Python, Leafletjs, Tessaract.js, Auth0
+
+
 ## Accomplishments that I'm proud of
 The platform also has a feature where it prompts a user for submitting scanned copy of identity proof, so that these users can be given a higher priority. Using a optical character recognition engine to extract the name/date of birth/ Id from the scanned image, is something I implemented for the first time.
 
-
 ## What's next for Immunize
 The Immunize app idea should be used by everyone to build a robust system for efficient delivery of the life saving vaccine. I would want to implement more data analytics around this, and also build a demand-supply evaluator, wherein if a highly populated area is falling short for vaccines, the supply from vaccine centers who have extra stock will be redirected. I will also implement a payment option, if at all the vaccine cost would be higher. A channel where people can post about the side effects they have encountered if any, would also be a good-to-have feature.
-
 
 ## 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
