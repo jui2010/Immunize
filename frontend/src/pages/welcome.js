@@ -36,7 +36,10 @@ class welcome extends Component {
             <Grid container spacing={2} className={classes.gridMain} style={{backgroundImage: `url(${bg1})`,backgroundPosition : 'left', backgroundSize: 'contain', backgroundRepeat: 'no-repeat' }} >
                 <Grid item xs={2}/>
                 <Grid item xs={8} style={{textAlign:"center"}} >
-                    <div style={{fontSize:"50px",fontWeight: '500', lineHeight : '20px', paddingTop : '100px', color : '#545454', fontFamily: '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif'}}>
+                    <div style={{fontSize:"40px",fontWeight: '500', lineHeight : '20px', paddingTop : '100px', color : '#545454', fontFamily: '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif'}}>
+                        Eradicating COVID-19
+                    </div>
+                     <div style={{fontSize:"50px",fontWeight: '500', lineHeight : '20px', paddingTop : '50px', color : '#545454', fontFamily: '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif'}}>
                         A step towards normalcy with<br/>
                     </div>
                     <div style={{fontSize:"120px" ,marginLeft : this.state.curTime === 4 | this.state.curTime === 6 | this.state.curTime === 8  ? '5px' :'0px', textShadow: this.state.curTime === 4 | this.state.curTime === 6 | this.state.curTime === 8  ? '2px 2px #62727b' : '' , color: this.state.curTime === 4 | this.state.curTime === 6 | this.state.curTime === 8  ? '#e3e3e3' : '' }}>

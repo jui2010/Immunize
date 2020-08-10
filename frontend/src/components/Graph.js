@@ -5,25 +5,25 @@ import {
 
 const data = [
   {
-    name: 'Page A', uv: 4000, pv: 2400, amt: 2400,
+    name: '4-Aug', supply: 4000, demand: 2400, amt: 2400,
   },
   {
-    name: 'Page B', uv: 3000, pv: 1398, amt: 2210,
+    name: '5-Aug', supply: 3000, demand: 1398, amt: 2210,
   },
   {
-    name: 'Page C', uv: 2000, pv: 9800, amt: 2290,
+    name: '6-Aug', supply: 2000, demand: 7900, amt: 5590,
   },
   {
-    name: 'Page D', uv: 2780, pv: 3908, amt: 2000,
+    name: '7-Aug', supply: 2780, demand: 3908, amt: 2000,
   },
   {
-    name: 'Page E', uv: 1890, pv: 4800, amt: 2181,
+    name: '8-Aug', supply: 1890, demand: 4800, amt: 2181,
   },
   {
-    name: 'Page F', uv: 2390, pv: 3800, amt: 2500,
+    name: '9-Aug', supply: 2390, demand: 3800, amt: 2500,
   },
   {
-    name: 'Page G', uv: 3490, pv: 4300, amt: 2100,
+    name: '10-Aug', supply: 3490, demand: 4300, amt: 2100,
   },
 ];
 
@@ -43,8 +43,8 @@ class Graph extends PureComponent {
         <YAxis />
         <Tooltip />
         <Legend />
-        <Line type="monotone" dataKey="pv" stroke="#8884d8" activeDot={{ r: 8 }} />
-        <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
+        <Line type="monotone" dataKey="demand" stroke="#8884d8" activeDot={{ r: 8 }} />
+        <Line type="monotone" dataKey="supply" stroke="#82ca9d" />
       </LineChart>
     );
   }

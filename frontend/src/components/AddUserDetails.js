@@ -7,6 +7,9 @@ import InputLabel from '@material-ui/core/InputLabel'
 import MenuItem from '@material-ui/core/MenuItem'
 import Typography from '@material-ui/core/Typography'
 import FormControl from '@material-ui/core/FormControl'
+import FormGroup from '@material-ui/core/FormGroup'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import Checkbox from '@material-ui/core/Checkbox'
 import Select from '@material-ui/core/Select'
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline'
 import Tooltip from '@material-ui/core/Tooltip'
@@ -161,19 +164,24 @@ export class AddUserDetails extends Component {
                             </Typography>
                         </Grid>
                         <Grid item xs={7} >
-                            <FormControl variant="outlined" className={classes.formControl} fullWidth>
-                                <InputLabel ></InputLabel>
-                                <Select
-                                value={this.state.disease}
-                                onChange={this.handleChange}
-                                >
-                                <MenuItem value="">
-                                    <em>None</em>
-                                </MenuItem>
-                                <MenuItem value={"No"}>No</MenuItem>
-                                <MenuItem value={"Yes"}>Yes</MenuItem>
-                                </Select>
-                            </FormControl>
+                        <FormGroup row>
+                            <FormControlLabel
+                                control={<Checkbox checked={true} onChange={this.handleChange} name="disease" />}
+                                label="None"
+                            /> 
+                            <FormControlLabel
+                                control={<Checkbox checked={false} onChange={this.handleChange} name="disease" />}
+                                label="Heart disease"
+                            />
+                            <FormControlLabel
+                                control={<Checkbox checked={false} onChange={this.handleChange} name="disease" />}
+                                label="Blood pressure"
+                            />
+                            <FormControlLabel
+                                control={<Checkbox checked={false} onChange={this.handleChange} name="disease" />}
+                                label="Hypertension"
+                            />       
+                            </FormGroup>    
                         </Grid>
                     </Grid>
 
